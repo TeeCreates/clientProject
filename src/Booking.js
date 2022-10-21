@@ -5,6 +5,7 @@ import { UserContext } from "./UserContext";
 import { DomainBookings } from "./DomainBookings";
 import { Loading } from "./Loading";
 import styled from "styled-components";
+import axios, * as others from "axios";
 
 export const Bookings = () => {
   const {
@@ -20,20 +21,29 @@ export const Bookings = () => {
   //get non domain user's bookings
   useEffect(() => {
     const fetchUserBookings = async () => {
-      await fetch(`/api/bookings/${accountEmail}`, {
-        method: "GET",
-        header: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+      // await fetch(`/api/bookings/${accountEmail}`, {
+      //   method: "GET",
+      //   header: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      // })
+      const res = await axios({
+        headers: {
+          "Access-Control-Allow-Origin": "*",
         },
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          setUserBookings(data.data);
-          console.log(data.data);
-        });
+        method: "get",
+        url: `https://serverproject-production.up.railway.app/api/bookings/${accountEmail}`,
+      });
+      setUserBookings(res.data);
+      console.log(res.data, "DID IT WORK?");
+      // .then((res) => {
+      //   return res.json();
+      // })
+      // .then((data) => {
+      //   setUserBookings(data.data);
+      //   console.log(data.data);
+      // });
     };
     if (deleted) {
       fetchUserBookings();
