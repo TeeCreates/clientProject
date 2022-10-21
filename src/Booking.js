@@ -18,6 +18,7 @@ export const Bookings = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [deleted, setDeleted] = useState(true);
 
+  console.log(accountEmail, "TESTING");
   //get non domain user's bookings
   useEffect(() => {
     const fetchUserBookings = async () => {
@@ -28,22 +29,26 @@ export const Bookings = () => {
       //     "Content-Type": "application/json",
       //   },
       // })
-      const res = await axios({
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        method: "get",
-        url: `https://serverproject-production.up.railway.app/api/bookings/${accountEmail}`,
-      });
-      setUserBookings(res.data);
-      console.log(res.data, "DID IT WORK?");
-      // .then((res) => {
-      //   return res.json();
-      // })
-      // .then((data) => {
-      //   setUserBookings(data.data);
-      //   console.log(data.data);
-      // });
+      try {
+        const res = await axios({
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+          method: "get",
+          url: `https://serverproject-production.up.railway.app/api/bookings/${accountEmail}`,
+        });
+        setUserBookings(res.data);
+        console.log(res.data, "DID IT WORK?");
+        // .then((res) => {
+        //   return res.json();
+        // })
+        // .then((data) => {
+        //   setUserBookings(data.data);
+        //   console.log(data.data);
+        // });
+      } catch (err) {
+        console.log(err);
+      }
     };
     if (deleted) {
       fetchUserBookings();

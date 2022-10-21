@@ -87,11 +87,11 @@ const Home = () => {
       {images ? (
         <div style={{}}>
           <ImageContainer>
-            {images
+            {/* {images
               ? images.map((image, index) => {
                   return <Img src={image.image} key={index}></Img>;
                 })
-              : null}
+              : null} */}
           </ImageContainer>
 
           <OverLay>
